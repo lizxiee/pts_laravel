@@ -23,7 +23,7 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::resource('barang',BarangController::class)->middleware('auth');
+Route::resource('barang', BarangController::class);
 
 Route::resource('kategori',KategoriController::class);
 Route::resource('barangmasuk',BarangMasukController::class);

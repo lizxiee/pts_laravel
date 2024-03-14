@@ -35,7 +35,7 @@ class BarangController extends Controller
         // mengambil data nama kategori untuk di kolom input kategori
         // pada form create barang
         $kategori_id = Kategori::all();
-        // mengarahkan ke view create.blade.php 
+        // mengarahkan ke view create.blade.php
         return view('dashboard.barang.create',compact('kategori_id'));
     }
 
@@ -51,13 +51,13 @@ class BarangController extends Controller
             'stok'          => 'integer|min:0', // Ubah validasi sesuai kebutuhan
             'kategori_id'   => 'required|exists:kategori,id',
         ]);
-    
+
         if ($validator->fails()) {
             return redirect()->route('barang.create')
                 ->withErrors($validator)
                 ->withInput();
         }
-    
+
         Barang::create([
             'merk'          => $request->merk,
             'seri'          => $request->seri,
@@ -65,11 +65,11 @@ class BarangController extends Controller
             'stok'          => $request->has('stok') ? $request->stok : 0, // Jika 'stok' tidak ada, gunakan 0
             'kategori_id'   => $request->kategori_id,
         ]);
-    
+
         return redirect()->route('barang.index')->with(['success' => 'Data Barang Berhasil Disimpan!']);
     }
-    
-    
+
+
 
     /**
      * Display the specified resource.
@@ -92,7 +92,7 @@ class BarangController extends Controller
         // mengambil data nama kategori untuk di kolom input kategori
         // pada form edit barang
         $kategori_id = Kategori::all();
-        // mengarahkan ke view edit.blade.php 
+        // mengarahkan ke view edit.blade.php
         // sesuai data dari variabel $rsetBarang dan $kategori_id
         return view('dashboard.barang.edit', compact('rsetBarang','kategori_id'));
     }
@@ -110,15 +110,15 @@ class BarangController extends Controller
         'stok'          => 'integer|min:0', // Pastikan validasi ini sesuai dengan kebutuhan Anda
         'kategori_id'   => 'required|exists:kategori,id',
     ]);
-    
+
     if ($validator->fails()) {
         return redirect()->route('barang.edit', $id)
             ->withErrors($validator)
             ->withInput();
     }
-    
+
     $rsetBarang = Barang::find($id);
-    
+
     $rsetBarang->update([
         'merk'          => $request->merk,
         'seri'          => $request->seri,
@@ -126,7 +126,7 @@ class BarangController extends Controller
         'stok'          => $request->has('stok') ? $request->stok : 0, // Jika 'stok' tidak ada, gunakan 0
         'kategori_id'   => $request->kategori_id,
     ]);
-    
+
     return redirect()->route('barang.index')->with(['success' => 'Data Barang Berhasil Diubah!']);
     }
 
@@ -141,8 +141,8 @@ class BarangController extends Controller
         if (DB::table('barangmasuk')->where('barang_id', $id)->exists() || DB::table('barangkeluar')
             ->where('barang_id', $id)->exists()){
             return redirect()->route('barang.index')->with(['Gagal' => 'Data Gagal Dihapus!']);
-        } 
-        
+        }
+
         // namun bila data barang tidak digunakan di tabel lainnya,
         // maka data barang bisa dihapus, dan mengeluarkan alert sukses
         else {
