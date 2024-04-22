@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\BarangMasukController;
@@ -20,10 +21,14 @@ use App\Http\Controllers\RegisterController;
 */
 
 Route::get('/', function () {
+    return view('homepage');
+});
+Route::get('/login', function () {
     return view('login');
 });
 
 Route::resource('barang', BarangController::class);
+
 
 Route::resource('kategori',KategoriController::class);
 Route::resource('barangmasuk',BarangMasukController::class);
@@ -37,3 +42,5 @@ Route::post('logout', [LoginController::class,'logout']);
 
 Route::post('register', [RegisterController::class,'store']);
 Route::get('register', [RegisterController::class,'create']);
+
+
